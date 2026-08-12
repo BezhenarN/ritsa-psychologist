@@ -1,9 +1,8 @@
 /* ============================================================
-   РИЦА — Психолог. Точная копия дизайна TapTop
-   Чистый HTML/CSS/JS, без конструктора
+   Психолог — Точная копия TapTop
+   Чистый HTML/CSS/JS
    ============================================================ */
 
-/* ---------- Reset ---------- */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -11,7 +10,6 @@
 }
 
 html {
-  /* vw-based font scaling (как в TapTop) */
   font-size: calc(-0.0005211rem + 0.8338vw);
   font-family: 'Inter', sans-serif;
   font-weight: 300;
@@ -50,7 +48,6 @@ a {
   overflow: hidden;
 }
 
-/* Фоновое фото — как в оригинале: абсолютное, 120rem */
 .hero__bg {
   position: absolute;
   top: 0;
@@ -63,7 +60,6 @@ a {
   object-position: center top;
 }
 
-/* Обёртка контента героя */
 .hero__wrap {
   position: relative;
   z-index: 1;
@@ -71,7 +67,6 @@ a {
   padding-right: 2rem;
 }
 
-/* Блок с иконкой + текст — flex column, gap 3.75rem */
 .hero__text-block {
   height: 67.5rem;
   display: flex;
@@ -81,7 +76,6 @@ a {
   row-gap: 3.75rem;
 }
 
-/* Иконка монаха — 43.44rem */
 .hero__icon {
   width: 43.44rem;
   height: auto;
@@ -92,7 +86,6 @@ a {
   height: auto;
 }
 
-/* Описание — max-width 29.19rem, 1.25rem */
 .hero__desc {
   max-width: 29.19rem;
   font-size: 1.25rem;
@@ -108,21 +101,18 @@ a {
   padding-right: 0;
 }
 
-/* ---------- Верхний ряд: 1fr 1fr 2fr ---------- */
 .grid--top {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   grid-template-rows: auto;
 }
 
-/* ---------- Нижний ряд: 1fr 1fr ---------- */
 .grid--bottom {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
 }
 
-/* ---------- Карточка (базовая) ---------- */
 .grid__card {
   height: 45rem;
   padding: 2rem;
@@ -131,7 +121,6 @@ a {
   cursor: pointer;
 }
 
-/* ---------- Метка (текст на карточке) ---------- */
 .grid__label {
   text-transform: uppercase;
   color: rgba(229, 232, 241, 1);
@@ -149,7 +138,6 @@ a {
   width: 15rem;
 }
 
-/* ---------- Изображение внутри карточки ---------- */
 .grid__card__img {
   width: 100%;
   height: 100%;
@@ -158,7 +146,6 @@ a {
   object-fit: cover;
 }
 
-/* ---------- Видео внутри карточки ---------- */
 .grid__video {
   position: absolute;
   top: 0;
@@ -180,14 +167,11 @@ a {
   object-fit: contain;
 }
 
-/* ---------- Варианты карточек ---------- */
-
-/* Контакты — бордовый фон */
+/* Card variants */
 .grid__card--contacts {
   background-color: rgb(96, 29, 47);
 }
 
-/* Обо мне — светло-серый фон, фото слева внизу */
 .grid__card--about {
   background-color: rgb(217, 217, 217);
 }
@@ -201,7 +185,6 @@ a {
   object-fit: contain;
 }
 
-/* Личные сессии — фото на весь фон */
 .grid__card--sessions .grid__card__img {
   width: 100%;
   height: 100%;
@@ -213,12 +196,10 @@ a {
   object-fit: cover;
 }
 
-/* Практики — видео на весь фон */
 .grid__card--practices .grid__video {
   object-fit: cover;
 }
 
-/* Эфиры — высокая карточка (span 2 rows), фото + центрированное видео */
 .grid__card--efiry {
   grid-row: span 2;
 }
@@ -234,7 +215,6 @@ a {
   object-fit: cover;
 }
 
-/* Отзывы — фото на весь фон */
 .grid__card--reviews .grid__card__img {
   width: 100%;
   height: 100%;
@@ -247,9 +227,9 @@ a {
 }
 
 /* ============================================================
-   MODALS
+   MODAL SLIDER (ОДНА модалка со всеми слайдами)
    ============================================================ */
-.modal {
+.modal_slider {
   display: none;
   align-items: flex-start;
   position: fixed;
@@ -261,12 +241,11 @@ a {
   height: 100vh;
 }
 
-.modal.is-open {
+.modal_slider.is-open {
   display: flex;
 }
 
-/* Overlay — затемнение */
-.modal__overlay {
+.modal_slider__overlay {
   display: flex;
   width: auto;
   position: absolute;
@@ -279,8 +258,18 @@ a {
   cursor: pointer;
 }
 
-/* Sidebar (боковая панель с вкладками) */
-.modal__sidebar {
+/* ===== Slide ===== */
+.slide {
+  display: none;
+  width: auto;
+}
+
+.slide.is-active {
+  display: flex;
+}
+
+/* Sidebar */
+.slide__sidebar {
   width: 30rem;
   height: 100vh;
   display: flex;
@@ -295,8 +284,8 @@ a {
   align-items: flex-end;
 }
 
-/* Вкладки */
-.modal__tab {
+/* Tabs */
+.slide__tab {
   color: rgba(229, 232, 241, 1);
   font-size: 2rem;
   text-align: right;
@@ -307,18 +296,31 @@ a {
   opacity: 0.7;
 }
 
-.modal__tab:hover {
+.slide__tab:hover {
   opacity: 1;
 }
 
-.modal__tab.active {
+.slide__tab.active {
   font-weight: 400;
   font-size: 2.1rem;
   opacity: 1;
 }
 
-/* Тело модалки */
-.modal__body {
+/* Close button */
+.slide__close {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  font-size: 2rem;
+  color: rgba(217, 217, 217, 1);
+  text-transform: uppercase;
+  z-index: 6;
+  text-decoration: none;
+  text-align: right;
+}
+
+/* Content */
+.slide__content {
   width: 100%;
   background-color: rgb(198, 197, 197);
   height: 100vh;
@@ -326,31 +328,21 @@ a {
   overflow-y: scroll;
 }
 
-/* Слайд */
-.modal__slide {
-  display: none;
-  width: 100%;
-}
-
-.modal__slide.active {
-  display: block;
-}
-
-/* Изображение в слайде */
-.modal__img {
+/* Image in slide */
+.slide__img {
   width: 100%;
   height: 42rem;
   overflow-x: visible;
   overflow-y: visible;
 }
 
-.modal__img img {
+.slide__img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.modal__img-full {
+.slide__img-full {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -361,8 +353,8 @@ a {
   object-fit: cover;
 }
 
-/* Фоновое изображение (эфиры) */
-.modal__bg {
+/* Background image */
+.slide__bg {
   width: 100%;
   height: 90rem;
   position: absolute;
@@ -373,8 +365,8 @@ a {
   object-fit: cover;
 }
 
-/* Видео в модалке */
-.modal__video {
+/* Video in slide */
+.slide__video {
   position: absolute;
   top: 0;
   left: 0;
@@ -385,7 +377,7 @@ a {
   object-fit: cover;
 }
 
-.modal__video--centered {
+.slide__video--centered {
   width: 30rem;
   height: 53.38rem;
   position: absolute;
@@ -395,8 +387,8 @@ a {
   object-fit: contain;
 }
 
-/* Текстовый блок в слайде */
-.modal__text {
+/* Text area */
+.slide__text {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 1.25rem;
@@ -405,22 +397,9 @@ a {
   overflow-y: visible;
 }
 
-.modal__subtitle {
+.slide__subtitle {
   font-size: 1rem;
   color: rgba(0, 0, 0, 1);
-}
-
-/* Кнопка закрытия */
-.modal__close {
-  position: absolute;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  font-size: 2rem;
-  color: rgba(217, 217, 217, 1);
-  text-transform: uppercase;
-  z-index: 6;
-  text-decoration: none;
-  text-align: right;
 }
 
 /* ============================================================
@@ -466,7 +445,7 @@ a {
     font-size: 14px;
   }
 
-  /* Grid — 2 колонки сверху, 1 снизу */
+  /* Grid */
   .grid--top {
     grid-template-columns: 1fr 1fr;
   }
@@ -479,7 +458,6 @@ a {
     height: 90rem;
   }
 
-  /* Сессии на мобильном — на всю ширину, 2-я строка */
   .grid__card--sessions {
     grid-row-start: 2;
     grid-row-end: 2;
@@ -487,7 +465,6 @@ a {
     grid-column-end: 3;
   }
 
-  /* Эфиры — высокая */
   .grid__card--efiry {
     height: 180rem;
   }
@@ -505,48 +482,57 @@ a {
     width: 27.6rem;
   }
 
-  /* Modal — полноэкранный, без sidebar */
-  .modal {
+  /* Modal — sidebar скрыт, полноэкранный */
+  .modal_slider {
     display: none;
     align-items: flex-start;
   }
 
-  .modal.is-open {
+  .modal_slider.is-open {
     display: flex;
   }
 
-  .modal__sidebar {
-    display: none;
-  }
-
-  .modal__overlay {
+  .modal_slider__overlay {
     background-color: rgb(0, 0, 0);
   }
 
-  .modal__body {
+  .slide {
+    display: none;
+    width: auto;
+  }
+
+  .slide.is-active {
+    display: flex;
+  }
+
+  .slide__sidebar {
+    display: none;
+  }
+
+  .slide__content {
     width: 120rem;
     width: 100vw;
     height: 100%;
   }
 
-  .modal__img {
+  .slide__img {
     height: 110rem;
     height: 60vh;
   }
 
-  .modal__text {
+  .slide__text {
     padding-left: 4rem;
     padding-right: 4rem;
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
 
-  .modal__subtitle {
+  .slide__subtitle {
     font-size: 3.76rem;
     font-size: 1.5rem;
   }
 
-  .modal__close {
+  .slide__close {
     position: absolute;
     z-index: 50;
     right: 3.17rem;
@@ -554,7 +540,7 @@ a {
     font-size: 2.5rem;
   }
 
-  .modal__video--centered {
+  .slide__video--centered {
     width: 60.22rem;
     height: 106.89rem;
     width: 70vw;
@@ -563,20 +549,20 @@ a {
 }
 
 /* ============================================================
-   Scrollbar (тонкий)
+   Scrollbar
    ============================================================ */
-.modal__body::-webkit-scrollbar,
-.modal__sidebar::-webkit-scrollbar {
+.slide__content::-webkit-scrollbar,
+.slide__sidebar::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-.modal__body::-webkit-scrollbar-track,
-.modal__sidebar::-webkit-scrollbar-track {
+.slide__content::-webkit-scrollbar-track,
+.slide__sidebar::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.modal__body::-webkit-scrollbar-thumb,
-.modal__sidebar::-webkit-scrollbar-thumb {
+.slide__content::-webkit-scrollbar-thumb,
+.slide__sidebar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 0.125rem;
 }

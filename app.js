@@ -1,127 +1,147 @@
 /* ============================================================
-   РИЦА — Психолог. Интерактивность
-   - Открытие/закрытие модалок из grid-карточек
+   Психолог — Интерактивность
+   - Открытие модалки по клику на grid-карточку (data-slide)
    - Переключение вкладок внутри модалки
-   - Закрытие по overlay и Escape
+   - Закрытие по overlay, кнопке "закрыть", Escape
    ============================================================ */
 
-// ---------- Modal system ----------
+// ---------- Открытие модалки ----------
 
 /**
- * Находит все модальные окна и привязывает события.
- * Каждая grid-карточка имеет data-modal="N" — открывает #modal-N.
+ * Привязывает клик по grid-карточкам.
+ * Каждая карточка имеет data-slide="N" — открывает слайд #N.
  */
-function initModals() {
-  const cards = document.querySelectorAll('.grid__card[data-modal]');
-  const modals = document.querySelectorAll('.modal');
-  const closeButtons = document.querySelectorAll('.modal__close');
-  const overlays = document.querySelectorAll('.modal__overlay');
+function initGridCards() {
+  const cards = document.querySelectorAll('.grid__card[data-slide]');
+  const slider = document.getElementById('modal_slider');
 
-  // Открытие модалки из карточки
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const modalIndex = card.dataset.modal;
-      openModal(modalIndex);
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      var slideNum = card.dataset.slide;
+      openSlide(slideNum);
     });
   });
+}
 
-  // Закрытие по кнопке
-  closeButtons.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      closeModal();
-    });
+/**
+ * Открывает модалку и показывает нужный слайд.
+ */
+function openSlide(slideNum) {
+  var slider = document.getElementById('modal_slider');
+  if (!slider) return;
+
+  // Показываем модалку
+  slider.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+
+  // Скрываем все слайды
+  var slides = slider.querySelectorAll('.slide');
+  slides.forEach(function(slide) {
+    slide.classList.remove('is-active');
   });
 
-  // Закрытие по overlay
-  overlays.forEach((overlay) => {
-    overlay.addEventListener('click', () => {
-      closeModal();
-    });
-  });
+  // Показываем нужный слайд
+  var targetSlide = slider.querySelector('.slide[data-slide="' + slideNum + '"]');
+  if (targetSlide) {
+    targetSlide.classList.add('is-active');
+  }
 
-  // Закрытие по Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeModal();
+  // Активируем нужную вкладку в этом слайде
+  var tabs = targetSlide.querySelectorAll('.slide__tab');
+  tabs.forEach(function(tab) {
+    tab.classList.remove('active');
+    if (tab.dataset.tab === slideNum) {
+      tab.classList.add('active');
     }
   });
 }
 
+// ---------- Закрытие модалки ----------
+
 /**
- * Открывает модальное окно по индексу.
+ * Закрывает модалку и разблокирует скролл.
  */
-function openModal(index) {
-  const modal = document.getElementById(`modal-${index}`);
-  if (!modal) return;
+function closeSlider() {
+  var slider = document.getElementById('modal_slider');
+  if (!slider) return;
 
-  modal.classList.add('is-open');
-  document.body.style.overflow = 'hidden'; // блокируем скролл фона
-
-  // Сбрасываем на первую вкладку
-  const tabs = modal.querySelectorAll('.modal__tab');
-  const slides = modal.querySelectorAll('.modal__slide');
-
-  tabs.forEach((tab) => tab.classList.remove('active'));
-  slides.forEach((slide) => slide.classList.remove('active'));
-
-  // Активируем нужную вкладку
-  const activeTab = modal.querySelector(`.modal__tab[data-target="${index}"]`);
-  if (activeTab) activeTab.classList.add('active');
-
-  const activeSlide = modal.querySelector(`.modal__slide[data-slide="${index}"]`);
-  if (activeSlide) activeSlide.classList.add('active');
+  slider.classList.remove('is-open');
+  document.body.style.overflow = '';
 }
 
 /**
- * Закрывает все модальные окна.
+ * Привязывает закрытие по overlay и кнопке "закрыть".
  */
-function closeModal() {
-  const modals = document.querySelectorAll('.modal.is-open');
+function initClose() {
+  var slider = document.getElementById('modal_slider');
+  if (!slider) return;
 
-  modals.forEach((modal) => {
-    modal.classList.remove('is-open');
+  // Overlay — клик закрывает
+  var overlay = slider.querySelector('.modal_slider__overlay');
+  if (overlay) {
+    overlay.addEventListener('click', closeSlider);
+  }
+
+  // Кнопки "закрыть" в каждом слайде
+  var closeBtns = slider.querySelectorAll('.slide__close');
+  closeBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeSlider();
+    });
   });
 
-  document.body.style.overflow = ''; // разблокируем скролл
+  // Escape закрывает
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeSlider();
+    }
+  });
 }
 
-// ---------- Tab switching inside modals ----------
+// ---------- Переключение вкладок ----------
 
 /**
- * Привязывает переключение вкладок внутри каждой модалки.
+ * Привязывает клик по вкладкам внутри активного слайда.
  */
 function initTabs() {
-  const modals = document.querySelectorAll('.modal');
+  var slider = document.getElementById('modal_slider');
+  if (!slider) return;
 
-  modals.forEach((modal) => {
-    const tabs = modal.querySelectorAll('.modal__tab');
+  var allTabs = slider.querySelectorAll('.slide__tab');
 
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
+  allTabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
 
-        const target = tab.dataset.target;
+      var tabNum = tab.dataset.tab;
 
-        // Переключаем активную вкладку
-        tabs.forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
+      // Сбрасываем active на всех вкладках текущего слайда
+      var parentSlide = tab.closest('.slide');
+      if (!parentSlide) return;
 
-        // Переключаем слайды
-        const slides = modal.querySelectorAll('.modal__slide');
-        slides.forEach((slide) => slide.classList.remove('active'));
-
-        const activeSlide = modal.querySelector(`.modal__slide[data-slide="${target}"]`);
-        if (activeSlide) {
-          activeSlide.classList.add('active');
-        }
+      var tabs = parentSlide.querySelectorAll('.slide__tab');
+      tabs.forEach(function(t) {
+        t.classList.remove('active');
       });
+      tab.classList.add('active');
+
+      // Переключаем на нужный слайд
+      var targetSlide = slider.querySelector('.slide[data-slide="' + tabNum + '"]');
+      if (!targetSlide) return;
+
+      var slides = slider.querySelectorAll('.slide');
+      slides.forEach(function(s) {
+        s.classList.remove('is-active');
+      });
+      targetSlide.classList.add('is-active');
     });
   });
 }
 
-// ---------- Init on DOM ready ----------
-document.addEventListener('DOMContentLoaded', () => {
-  initModals();
+// ---------- Init ----------
+document.addEventListener('DOMContentLoaded', function() {
+  initGridCards();
+  initClose();
   initTabs();
 });
