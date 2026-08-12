@@ -1,0 +1,573 @@
+/* ============================================================
+   РИЦА — Психолог. Лендинг. Чистый HTML/CSS/JS
+   Вдохновлён дизайном TapTop (site-06684.taptop.pro)
+   ============================================================ */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --bg:        #101010;
+  --bg-mobile: #131313;
+  --text:      rgb(229, 232, 241);
+  --text-dark: rgb(24, 24, 24);
+  --accent:    rgb(96, 29, 47);    /* тёмный бордовый */
+  --light:     rgb(217, 217, 217); /* светло-серый */
+  --modal-bg:  rgb(198, 197, 197);
+  --overlay:   rgba(0, 0, 0, 0.6);
+
+  /* Typography */
+  --font: 'Inter', sans-serif;
+  --fw-light: 100;
+  --fw-regular: 400;
+
+  /* Spacing */
+  --pad-section: 2rem;
+  --pad-card:    2rem;
+  --pad-modal:   2rem;
+
+  /* Font sizes (rem — base ~16px; TapTop uses vw-based sizing) */
+  --fs-hero:   1.25rem;
+  --fs-grid:   2.5rem;
+  --fs-tab:    2rem;
+  --fs-close:  2rem;
+}
+
+html {
+  font-family: var(--font);
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  /* vw-based font scaling (from TapTop) */
+  font-size: calc(
+    -0.0005211rem + 0.8338vw
+  );
+}
+
+@media (max-width: 1920px) {
+  html {
+    font-size: calc(
+      -0.0005211rem + 0.8338vw
+    );
+  }
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  height: 67.5rem;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 120rem;
+  height: 67.5rem;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  height: 67.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.hero__icon {
+  width: 43.44rem;
+  height: auto;
+  margin-bottom: 3.75rem;
+}
+
+.hero__icon img {
+  width: 100%;
+  height: auto;
+}
+
+.hero__text {
+  max-width: 29.19rem;
+  font-size: var(--fs-hero);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Text wrapper between icon and text */
+.hero__content > div:first-child + .hero__text {
+  margin-top: 3.75rem;
+}
+
+/* ============================================================
+   GRID NAVIGATION
+   ============================================================ */
+.grid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.grid__row {
+  display: grid;
+  gap: 0;
+}
+
+.grid__row--top {
+  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-rows: auto;
+}
+
+.grid__row--bottom {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+/* ---------- Cards ---------- */
+.grid__card {
+  height: 45rem;
+  padding: var(--pad-card);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.grid__card-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+
+.grid__card--photo .grid__card-img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Card variants */
+.grid__card--accent {
+  background-color: var(--accent);
+}
+
+.grid__card--light {
+  background-color: var(--light);
+  position: relative;
+}
+
+.grid__card--light .grid__card-img {
+  width: auto;
+  height: 38.63rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.grid__card--photo {
+  position: relative;
+}
+
+.grid__card--video {
+  position: relative;
+}
+
+.grid__card--tall {
+  grid-row: span 2;
+}
+
+/* ---------- Labels ---------- */
+.grid__label {
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: var(--fw-light);
+  font-size: var(--fs-grid);
+  position: relative;
+  z-index: 30;
+}
+
+.grid__label--dark {
+  color: var(--text-dark);
+}
+
+.grid__label--wide {
+  width: 15rem;
+}
+
+/* ---------- Videos in cards ---------- */
+.grid__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.grid__video--centered {
+  width: 30rem;
+  height: 53.38rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3D(-50%, -50%, 0);
+  object-fit: contain;
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal {
+  display: none;
+  align-items: flex-start;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  height: 100vh;
+}
+
+.modal.is-open {
+  display: flex;
+}
+
+/* Overlay */
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 5;
+  cursor: pointer;
+}
+
+/* Side panel (desktop) */
+.modal__panel {
+  width: 30rem;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  z-index: 10;
+  background: var(--modal-bg);
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+/* Navigation in panel */
+.modal__nav {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
+  padding-right: 1.25rem;
+  z-index: 10;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 100vh;
+}
+
+.modal__tab {
+  color: var(--text);
+  font-size: var(--fs-tab);
+  text-align: right;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: font-weight 0.2s, opacity 0.2s;
+  opacity: 0.7;
+}
+
+.modal__tab:hover {
+  opacity: 1;
+}
+
+.modal__tab.active {
+  font-weight: var(--fw-regular);
+  font-size: 2.1rem;
+  opacity: 1;
+}
+
+/* Content area */
+.modal__content {
+  width: 100%;
+  background: var(--modal-bg);
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.modal__slide {
+  display: none;
+  width: 100%;
+}
+
+.modal__slide.active {
+  display: block;
+}
+
+.modal__image-wrap {
+  width: 100%;
+  height: 42rem;
+  overflow: hidden;
+}
+
+.modal__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal__text-wrap {
+  padding: var(--pad-modal);
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.modal__subtitle {
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 1);
+}
+
+/* Video in modal */
+.modal__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal__video--centered {
+  width: 30rem;
+  height: 53.38rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3D(-50%, -50%, 0);
+  object-fit: contain;
+}
+
+.modal__bg-img {
+  width: 100%;
+  height: 90rem;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+}
+
+/* Close button */
+.modal__close {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  font-size: var(--fs-close);
+  color: var(--light);
+  text-transform: uppercase;
+  z-index: 6;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  text-decoration: none;
+  text-align: right;
+}
+
+/* ============================================================
+   MOBILE (< 480px)
+   ============================================================ */
+@media (max-width: 479px) {
+  html {
+    font-size: 14px; /* base mobile size */
+    background: var(--bg-mobile);
+  }
+
+  /* Hero */
+  .hero {
+    height: 98vh;
+  }
+
+  .hero__bg {
+    width: 120%;
+    height: 98vh;
+    left: -10%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero__content {
+    height: 98vh;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: hidden;
+  }
+
+  .hero__icon {
+    width: 71.44rem;
+    max-width: 80vw;
+  }
+
+  .hero__text {
+    max-width: 86.19rem;
+    max-width: 85vw;
+    font-size: 14px;
+  }
+
+  /* Grid */
+  .grid__row--top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid__row--bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .grid__card {
+    height: 90rem;
+  }
+
+  .grid__card--photo {
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .grid__card--tall {
+    height: 180rem;
+  }
+
+  .grid__card--light .grid__card-img {
+    height: 78.63rem;
+  }
+
+  .grid__card-img--full {
+    height: auto;
+  }
+
+  .grid__label {
+    font-size: 4.5rem;
+    font-size: 2.8rem;
+  }
+
+  .grid__label--wide {
+    width: 27.6rem;
+    width: 60vw;
+  }
+
+  /* Modal — full screen */
+  .modal {
+    display: none;
+    align-items: flex-start;
+  }
+
+  .modal.is-open {
+    display: flex;
+  }
+
+  .modal__panel {
+    display: none; /* hide sidebar on mobile */
+  }
+
+  .modal__content {
+    width: 120rem;
+    width: 100vw;
+    height: 100%;
+  }
+
+  .modal__image-wrap {
+    height: 110rem;
+    height: 60vh;
+  }
+
+  .modal__text-wrap {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding: 4rem;
+  }
+
+  .modal__subtitle {
+    font-size: 3.76rem;
+    font-size: 1.5rem;
+  }
+
+  /* Mobile tab bar */
+  .modal__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+    z-index: 50;
+    padding-right: 3.17rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .modal__mobile-nav .modal__tab {
+    font-size: 10rem;
+    font-size: 2.5rem;
+  }
+
+  .modal__close {
+    position: absolute;
+    z-index: 50;
+    right: 3.17rem;
+    bottom: 22.21rem;
+    font-size: 2.5rem;
+  }
+
+  .modal__video--centered {
+    width: 60.22rem;
+    height: 106.89rem;
+    width: 70vw;
+    height: 70vw;
+  }
+
+  /* Overlay on mobile */
+  .overlay-slider-copy {
+    background-color: var(--bg);
+  }
+}
+
+/* ============================================================
+   SCROLLBAR (subtle)
+   ============================================================ */
+.modal__content::-webkit-scrollbar,
+.modal__panel::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.modal__content::-webkit-scrollbar-track,
+.modal__panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal__content::-webkit-scrollbar-thumb,
+.modal__panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0.125rem;
+}

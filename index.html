@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Дипломированный психолог. Энергопрактик. Мастер осознанных трансформаций.">
+  <title>Марго — Психолог & Энергопрактик</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== HERO SECTION ===== -->
+  <header class="hero">
+    <img
+      src="assets/images/margo.webp"
+      alt="Марго"
+      class="hero__bg"
+      loading="eager"
+    >
+    <div class="hero__content">
+      <div class="hero__icon">
+        <img src="assets/images/monk.svg" alt="">
+      </div>
+      <p class="hero__text">
+        Дипломированный психолог. Энергопрактик.<br>
+        Мастер осознанных трансформаций. Духовный Проводник к&nbsp;твоему настоящему &laquo;Я ЕСТЬ&raquo;.
+      </p>
+    </div>
+  </header>
+
+  <!-- ===== GRID NAVIGATION ===== -->
+  <section class="grid">
+    <div class="grid__row grid__row--top">
+      <!-- Card 6: Контакты -->
+      <div class="grid__card grid__card--accent" data-modal="0" data-tab="5">
+        <span class="grid__label">Контакты</span>
+      </div>
+
+      <!-- Card 1: Обо мне -->
+      <div class="grid__card grid__card--light" data-modal="0" data-tab="0">
+        <img src="assets/images/about.png" alt="" class="grid__card-img">
+        <span class="grid__label grid__label--dark">Обо мне</span>
+      </div>
+
+      <!-- Card 2: Личные сессии -->
+      <div class="grid__card grid__card--photo" data-modal="1" data-tab="1">
+        <img src="assets/images/sessions.webp" alt="" class="grid__card-img">
+        <span class="grid__label">Личные сессии</span>
+      </div>
+    </div>
+
+    <div class="grid__row grid__row--bottom">
+      <!-- Card 3: Групповые практики -->
+      <div class="grid__card grid__card--video" data-modal="2" data-tab="2">
+        <span class="grid__label grid__label--wide">Групповые практики</span>
+        <video autoplay muted loop playsinline preload="metadata" class="grid__video">
+          <source src="assets/videos/practices.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- Card 4: Эфиры (большая карточка) -->
+      <div class="grid__card grid__card--tall grid__card--video" data-modal="3" data-tab="3">
+        <span class="grid__label">Эфиры</span>
+        <img src="assets/images/efiry.png" alt="" class="grid__card-img grid__card-img--full">
+        <video autoplay muted loop playsinline preload="metadata" class="grid__video grid__video--centered">
+          <source src="assets/videos/efiry.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- Card 5: Отзывы -->
+      <div class="grid__card grid__card--photo" data-modal="4" data-tab="4">
+        <span class="grid__label">Отзывы</span>
+        <img src="assets/images/reviews.png" alt="" class="grid__card-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- Modal 0: Обо мне -->
+  <div class="modal" id="modal-0">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab active" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab" data-target="2">Практики</a>
+        <a href="#" class="modal__tab" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide active" data-slide="0">
+          <div class="modal__image-wrap">
+            <img src="assets/images/about.png" alt="Обо мне">
+          </div>
+          <div class="modal__text-wrap">
+            <span class="modal__subtitle">Обо мне</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Modal 1: Личные сессии -->
+  <div class="modal" id="modal-1">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab active" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab" data-target="2">Практики</a>
+        <a href="#" class="modal__tab" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide" data-slide="1">
+          <div class="modal__image-wrap">
+            <img src="assets/images/sessions.webp" alt="Личные сессии">
+          </div>
+          <div class="modal__text-wrap">
+            <span class="modal__subtitle">Личные сессии</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Modal 2: Групповые практики -->
+  <div class="modal" id="modal-2">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab active" data-target="2">Практики</a>
+        <a href="#" class="modal__tab" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide" data-slide="2">
+          <video autoplay muted loop playsinline preload="metadata" class="modal__video">
+            <source src="assets/videos/practices.mp4" type="video/mp4">
+          </video>
+          <div class="modal__text-wrap">
+            <span class="modal__subtitle">Практики</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Modal 3: Эфиры -->
+  <div class="modal" id="modal-3">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab" data-target="2">Практики</a>
+        <a href="#" class="modal__tab active" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide" data-slide="3">
+          <img src="assets/images/efiry.png" alt="" class="modal__bg-img">
+          <video autoplay muted loop playsinline preload="metadata" class="modal__video modal__video--centered">
+            <source src="assets/videos/efiry.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Modal 4: Отзывы -->
+  <div class="modal" id="modal-4">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab" data-target="2">Практики</a>
+        <a href="#" class="modal__tab" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab active" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide" data-slide="4">
+          <img src="assets/images/reviews.png" alt="Отзывы">
+          <div class="modal__text-wrap">
+            <span class="modal__subtitle">Отзывы</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Modal 5: Контакты -->
+  <div class="modal" id="modal-5">
+    <div class="modal__overlay"></div>
+    <div class="modal__panel">
+      <nav class="modal__nav">
+        <a href="#" class="modal__tab" data-target="0">Обо мне</a>
+        <a href="#" class="modal__tab" data-target="1">Личные сессии</a>
+        <a href="#" class="modal__tab" data-target="2">Практики</a>
+        <a href="#" class="modal__tab" data-target="3">Эфиры</a>
+        <a href="#" class="modal__tab" data-target="4">Отзывы</a>
+        <a href="#" class="modal__tab active" data-target="5">Контакты</a>
+      </nav>
+      <div class="modal__content">
+        <div class="modal__slide" data-slide="5">
+          <div class="modal__text-wrap">
+            <span class="modal__subtitle">Контакты</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal__close" aria-label="Закрыть">закрыть</button>
+  </div>
+
+  <!-- Script -->
+  <script src="app.js" type="module"></script>
+</body>
+</html>
